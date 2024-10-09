@@ -2,6 +2,7 @@ package com.hossainalamin.SpringBootProject.controller;
 
 import com.hossainalamin.SpringBootProject.entity.JournalEntry;
 import com.hossainalamin.SpringBootProject.services.JournalEntryService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ public class JournalEntryDataController {
 
     @GetMapping
     public List<JournalEntry> getAllJournalEntries(){
-        return null;
+        return journalEntryService.getAllJournalEntries();
     }
 
     @PostMapping
@@ -24,16 +25,17 @@ public class JournalEntryDataController {
         return "Journal Entry Created";
     }
     @GetMapping("/id/{journalId}")
-    public JournalEntry getJournalEntryById(@PathVariable Long journalId){
-        return null;
+    public JournalEntry getJournalEntryById(@PathVariable ObjectId journalId){
+        return journalEntryService.getJournalEntryById(journalId).orElse(null);
+
     }
     @PutMapping("/id/{journalId}")
-    public JournalEntry updateJournalById(@PathVariable Long journalId, JournalEntry updatedEntry){
+    public JournalEntry updateJournalById(@PathVariable ObjectId journalId, JournalEntry updatedEntry){
         return null;
     }
 
     @DeleteMapping("/id/{jounalId}")
-    public JournalEntry deleteJournalById(@PathVariable Long jounalId){
+    public JournalEntry deleteJournalById(@PathVariable ObjectId jounalId){
         return null;
     }
 

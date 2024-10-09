@@ -1,0 +1,43 @@
+[33mcommit b6084a3343c5888556d22b4d1f6061a099390a80[m
+Author: alamin.hossain <[1;31malamin.hossain@bracits.com[m>
+Date:   Tue Oct 8 17:38:07 2024 +0600
+
+    mongo db version change
+
+[33mcommit 2143f97e6ae5f86cdf08b6eb0f4e7aabb5b8be20[m
+Merge: faa4101 a2ce985
+Author: alamin.hossain <[1;31malamin.hossain@bracits.com[m>
+Date:   Mon Oct 7 17:29:07 2024 +0600
+
+    Resolved merge conflict in README.md
+
+[33mcommit faa41010444c182da99a2eefb93e74dbdd27504e[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m
+Merge: d533f81 d6d3a50
+Author: alamin.hossain <[1;31malamin.hossain@bracits.com[m>
+Date:   Mon Oct 7 17:23:48 2024 +0600
+
+    Merge branch 'master'
+
+[33mcommit d533f81c60269be9abef6d42f9b844534b4cd167[m
+Author: alamin.hossain <[1;31malamin.hossain@bracits.com[m>
+Date:   Mon Oct 7 17:08:24 2024 +0600
+
+    mongodb properties addition
+
+[33mcommit d6d3a50f9dd7af627b63690813f5e8a8b2587e0c[m
+Author: alamin.hossain <[1;31malamin.hossain@bracits.com[m>
+Date:   Mon Oct 7 09:44:05 2024 +0600
+
+    mongodb properties addition
+
+[33mcommit fbeb2bb825757278609d045630df171bc7889ab9[m
+Author: alamin.hossain <[1;31malamin.hossain@bracits.com[m>
+Date:   Mon Oct 7 09:40:35 2024 +0600
+
+    add mongodb dependency
+
+[33mcommit e45afd23d9a9aea5206e877169db769a11e61b3c[m
+Author: alamin.hossain <[1;31malamin.hossain@bracits.com[m>
+Date:   Sun Oct 6 13:52:53 2024 +0600
+
+    first commit
