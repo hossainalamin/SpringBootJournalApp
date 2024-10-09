@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/journal")
+@RequestMapping("/_journal")
 public class JournalEntryController {
    private Map<Long, JournalEntry> journerEntries = new HashMap<>();
 
@@ -20,7 +20,7 @@ public class JournalEntryController {
 
    @PostMapping
    public String createJournalEntry(@RequestBody JournalEntry newEntry){
-       journerEntries.put(newEntry.getId(), newEntry);
+//       journerEntries.put(newEntry.getId(), newEntry);
        return "Journal Entry Created";
    }
    @GetMapping("/id/{journalId}")
