@@ -30,13 +30,20 @@ public class JournalEntryDataController {
 
     }
     @PutMapping("/id/{journalId}")
-    public JournalEntry updateJournalById(@PathVariable ObjectId journalId, JournalEntry updatedEntry){
-        return null;
+    public JournalEntry updateJournalById(@PathVariable ObjectId journalId, @RequestBody JournalEntry updatedEntry){
+        JournalEntry journalEntry = journalEntryService.getJournalEntryById(journalId).orElse(null);
+        if(journalEntry != null){
+            journalEntry.setContent(updatedEntry.getContent() == null && updatedEntry.getContent().equals("") ? journalEntry.getContent() : updatedEntry.getContent());
+            journalEntry.setTitle(updatedEntry.getTitle() == null && updatedEntry.getTitle().equals("") ? journalEntry.getTitle() : updatedEntry.getTitle());
+        }
+        journalEntryService.createJournalEntry(journalEntry);
+        return journalEntry;
     }
 
     @DeleteMapping("/id/{jounalId}")
-    public JournalEntry deleteJournalById(@PathVariable ObjectId jounalId){
-        return null;
+    public boolean deleteJournalById(@PathVariable ObjectId jounalId){
+        journalEntryService.deleteJournalById(jounalId);
+        return true;
     }
 
 }
