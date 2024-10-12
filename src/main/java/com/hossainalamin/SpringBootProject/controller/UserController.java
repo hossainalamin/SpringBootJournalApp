@@ -16,13 +16,9 @@ public class UserController {
     @Autowired
     UserService userService;
     @GetMapping
-    public ResponseEntity<?> getAllUsers(){
+    public List<Users> getAllUsers(){
         List<Users> usersList = userService.getAllUsers();
-        if(usersList != null && !usersList.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return usersList;
     }
 
     @PostMapping
