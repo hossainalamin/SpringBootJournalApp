@@ -22,7 +22,7 @@ public class JournalEntryService {
         Users users = userService.findUserByUserName(userName);
         JournalEntry journalEntry1 = journalEntryRepository.save(journalEntry);
         users.getJournalEntries().add(journalEntry1);
-        userService.createUsers(users);
+        userService.createNewUser(users);
         return journalEntry1;
     }
     public void createJournalEntry(JournalEntry journalEntry){

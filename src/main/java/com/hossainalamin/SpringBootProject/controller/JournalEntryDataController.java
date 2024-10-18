@@ -8,6 +8,8 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -22,9 +24,11 @@ public class JournalEntryDataController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("{userName}")
-    public ResponseEntity<?> getAllJournalEntriesByUserName(@PathVariable String userName){
-        Users user = userService.findUserByUserName(userName);
+    @GetMapping
+    public ResponseEntity<?> getAllJournalEntriesByUserName(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        Users user = userService.findUserByUserName(name);
         List<JournalEntry> getAllData =  user.getJournalEntries();
         if(getAllData != null && !getAllData.isEmpty()){
             return new ResponseEntity<>(getAllData, HttpStatus.OK);
@@ -32,12 +36,13 @@ public class JournalEntryDataController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-    @PostMapping("{userName}")
-    public ResponseEntity<?> createJournalEntry(@RequestBody JournalEntry newEntry, @PathVariable String userName){
+    @PostMapping
+    public ResponseEntity<?> createJournalEntry(@RequestBody JournalEntry newEntry){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
         try {
             newEntry.setDate(LocalDateTime.now());
-            JournalEntry journalEntry = journalEntryService.createJournalEntry(newEntry, userName);
+            JournalEntry journalEntry = journalEntryService.createJournalEntry(newEntry, name);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (Exception ex){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
