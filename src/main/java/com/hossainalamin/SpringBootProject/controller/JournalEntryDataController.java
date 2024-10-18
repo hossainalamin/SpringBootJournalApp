@@ -57,21 +57,29 @@ public class JournalEntryDataController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PutMapping("id/{userName}/{journalId}")
-    public ResponseEntity<?> updateJournalById(@PathVariable String userName
-            , @PathVariable ObjectId journalId, @RequestBody JournalEntry updatedEntry){
-        JournalEntry journalEntry = journalEntryService.getJournalEntryById(journalId).orElse(null);
-        if(journalEntry != null){
-            journalEntry.setContent(updatedEntry.getContent() == null && updatedEntry.getContent().equals("") ? journalEntry.getContent() : updatedEntry.getContent());
-            journalEntry.setTitle(updatedEntry.getTitle() == null && updatedEntry.getTitle().equals("") ? journalEntry.getTitle() : updatedEntry.getTitle());
+    @PutMapping("id/{journalId}")
+    public ResponseEntity<?> updateJournalById(@PathVariable ObjectId journalId, @RequestBody JournalEntry updatedEntry){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        Users userByUserName = userService.findUserByUserName(name);
+        boolean journalExists = userByUserName.getJournalEntries().stream()
+                .anyMatch(journalEntry -> journalEntry.getId().equals(journalId));
+        if(journalExists){
+            JournalEntry journalEntry = journalEntryService.getJournalEntryById(journalId).orElse(null);
+            if(journalEntry != null){
+                journalEntry.setContent(updatedEntry.getContent() == null && updatedEntry.getContent().equals("") ? journalEntry.getContent() : updatedEntry.getContent());
+                journalEntry.setTitle(updatedEntry.getTitle() == null && updatedEntry.getTitle().equals("") ? journalEntry.getTitle() : updatedEntry.getTitle());
+            }
+            journalEntryService.createJournalEntry(journalEntry);
         }
-        journalEntryService.createJournalEntry(journalEntry);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/id/{userName}/{journalId}")
-    public ResponseEntity<?> deleteJournalById(@PathVariable String userName, @PathVariable ObjectId journalId){
-        journalEntryService.deleteJournalById(userName, journalId);
+    @DeleteMapping("/id/{journalId}")
+    public ResponseEntity<?> deleteJournalById(@PathVariable ObjectId journalId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        journalEntryService.deleteJournalById(name, journalId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
