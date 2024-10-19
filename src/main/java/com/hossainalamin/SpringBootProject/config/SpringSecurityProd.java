@@ -17,16 +17,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @EnableAutoConfiguration
-@Profile("dev")
-public class SpringSecurity {
+@Profile("prod")
+public class SpringSecurityProd {
     @Autowired
     private UserDetailsServiceImp userDetailsServiceImp;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http.authorizeHttpRequests(request->request
-                .requestMatchers("/public/**").permitAll()
-                .requestMatchers("/journal/**", "/user/**").authenticated()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
