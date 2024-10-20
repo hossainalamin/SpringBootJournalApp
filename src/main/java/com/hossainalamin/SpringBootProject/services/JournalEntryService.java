@@ -4,6 +4,8 @@ import com.hossainalamin.SpringBootProject.entity.JournalEntry;
 import com.hossainalamin.SpringBootProject.entity.Users;
 import com.hossainalamin.SpringBootProject.repository.JournalEntryRepository;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,7 @@ import java.util.Optional;
 public class JournalEntryService {
     @Autowired
     private JournalEntryRepository journalEntryRepository;
+    private static final Logger logger = LoggerFactory.getLogger(JournalEntryService.class);
     @Autowired
     private UserService userService;
     public JournalEntry createJournalEntry(JournalEntry journalEntry, String userName){
