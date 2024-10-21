@@ -3,6 +3,7 @@ package com.hossainalamin.SpringBootProject.services;
 import com.hossainalamin.SpringBootProject.entity.JournalEntry;
 import com.hossainalamin.SpringBootProject.entity.Users;
 import com.hossainalamin.SpringBootProject.repository.JournalEntryRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,17 +15,23 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Slf4j
 public class JournalEntryService {
     @Autowired
     private JournalEntryRepository journalEntryRepository;
-    private static final Logger logger = LoggerFactory.getLogger(JournalEntryService.class);
+//    private static final Logger logger = LoggerFactory.getLogger(JournalEntryService.class); we can use @slf4j
     @Autowired
     private UserService userService;
     public JournalEntry createJournalEntry(JournalEntry journalEntry, String userName){
-        Users users = userService.findUserByUserName(userName);
-        JournalEntry journalEntry1 = journalEntryRepository.save(journalEntry);
-        users.getJournalEntries().add(journalEntry1);
-        userService.createUsers(users);
+        JournalEntry journalEntry1 = null;
+        try {
+            Users users = userService.findUserByUserName(userName);
+            journalEntry1 = journalEntryRepository.save(journalEntry);
+            users.getJournalEntries().add(journalEntry1);
+            userService.createUsers(users);
+        }catch (Exception ex){
+            log.error("Error occured {}", journalEntry.getTitle(), ex);
+        }
         return journalEntry1;
     }
     public void createJournalEntry(JournalEntry journalEntry){
