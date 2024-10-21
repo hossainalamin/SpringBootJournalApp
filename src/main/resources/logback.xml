@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+    <!-- Define appenders -->
+    <Appenders>
+        <!-- Console Appender -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p [%t] %c{1}:%L - %m%n"/>
+        </Console>
+
+        <!-- File Appender with Rolling Policy -->
+        <RollingFile name="File" fileName="logs/app-log.log"
+                     filePattern="logs/app-log-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p [%t] %c{1}:%L - %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+            <DefaultRolloverStrategy max="30" /> <!-- Keep 30 days of logs -->
+        </RollingFile>
+    </Appenders>
+
+    <!-- Root logger -->
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Root>
+
+        <!-- Package specific logger -->
+        <Logger name="com.hossainalamin.SpringBootProject" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Logger>
+
+        <!-- Enable SQL query logging -->
+        <Logger name="org.springframework.jdbc.core" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+    </Loggers>
+</Configuration>
