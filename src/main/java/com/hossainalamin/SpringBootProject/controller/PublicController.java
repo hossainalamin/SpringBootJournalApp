@@ -16,7 +16,7 @@ public class PublicController {
     public ResponseEntity<?> createUser(@RequestBody Users users){
         try {
             if(users != null) {
-                boolean userCreate = userService.createNewUser(users);
+                boolean userCreate = userService.createAdminUsers(users);
                 if(userCreate){
                     return new ResponseEntity<>(HttpStatus.CREATED);
                 }else{
@@ -27,7 +27,10 @@ public class PublicController {
             }
         }
         catch (Exception ex){
+            // Log the exception for debugging
+            ex.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
 }

@@ -24,7 +24,7 @@ public class UserService{
     }
     public boolean createNewUser(Users users){
         users.setPassword(passwordEncoder.encode(users.getPassword()));
-        users.setRoles(Arrays.asList("Users"));
+        users.setRoles(Arrays.asList("ROLE_USER"));
         userRepository.save(users);
         return true;
     }
@@ -54,7 +54,7 @@ public class UserService{
 
     public boolean createAdminUsers(Users users) {
         users.setPassword(passwordEncoder.encode(users.getPassword()));
-        users.setRoles(Arrays.asList("Users", "ROLE_ADMIN"));
+        users.setRoles(Arrays.asList("ROLE_USER", "ROLE_ADMIN"));
         userRepository.save(users);
         return true;
     }
