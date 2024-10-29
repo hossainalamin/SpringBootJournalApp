@@ -27,7 +27,6 @@ public class PublicController {
             }
         }
         catch (Exception ex){
-            // Log the exception for debugging
             ex.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

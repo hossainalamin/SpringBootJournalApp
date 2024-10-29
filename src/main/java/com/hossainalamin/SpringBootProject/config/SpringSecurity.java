@@ -4,7 +4,6 @@ import com.hossainalamin.SpringBootProject.services.UserDetailsServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -17,16 +16,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 @EnableAutoConfiguration
-@Profile("dev")
 public class SpringSecurity {
     @Autowired
     private UserDetailsServiceImp userDetailsServiceImp;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http.authorizeHttpRequests(request -> request
-                        /*.requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/public/**").permitAll()
                         .requestMatchers("/journal/**", "/user/**", "/erp/**").authenticated()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")*/
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll())
         .httpBasic(Customizer.withDefaults())
         .csrf(AbstractHttpConfigurer::disable)
