@@ -1,7 +1,9 @@
 package com.hossainalamin.SpringBootProject.controller;
 
+import com.hossainalamin.SpringBootProject.api.response.WeatherResponse;
 import com.hossainalamin.SpringBootProject.entity.Users;
 import com.hossainalamin.SpringBootProject.services.UserService;
+import com.hossainalamin.SpringBootProject.services.WeatherApiConsume;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,8 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private WeatherApiConsume weatherApiConsume;
     @PutMapping
     public ResponseEntity<?> updateUserByUserName(@RequestBody Users users){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -38,5 +42,13 @@ public class UserController {
         }else{
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
         }
+    }
+
+    @GetMapping("/get-user/{city}")
+    public ResponseEntity<?> getIndividualUser(@PathVariable String city){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        WeatherResponse weather = weatherApiConsume.getWeather(city);
+        return new ResponseEntity<>("Hello "+name+ " Weather report time " +weather.getCurrent().getObservationTime() + "Temperature +" +weather.getCurrent().getTemperature(), HttpStatus.OK);
     }
 }
