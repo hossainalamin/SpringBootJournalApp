@@ -51,4 +51,12 @@ public class UserController {
         WeatherResponse weather = weatherApiConsume.getWeather(city);
         return new ResponseEntity<>("Hello "+name+ " Weather report time " +weather.getCurrent().getObservationTime() + "Temperature +" +weather.getCurrent().getTemperature(), HttpStatus.OK);
     }
+    @GetMapping("/post-user")
+    public ResponseEntity<?> getIndividualUserFromPostMethod(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        WeatherResponse weather = weatherApiConsume.getWeather("Dhaka");
+
+        return new ResponseEntity<>("Hello "+name+ " Weather report time " +weather.getCurrent().getObservationTime() + "Temperature +" +weather.getCurrent().getTemperature(), HttpStatus.OK);
+    }
 }
