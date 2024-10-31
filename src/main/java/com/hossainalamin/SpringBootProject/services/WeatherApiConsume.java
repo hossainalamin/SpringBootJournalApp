@@ -3,6 +3,7 @@ package com.hossainalamin.SpringBootProject.services;
 import com.hossainalamin.SpringBootProject.api.response.WeatherResponse;
 import com.hossainalamin.SpringBootProject.entity.Users;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,8 @@ import java.util.stream.DoubleStream;
 
 @Component
 public class WeatherApiConsume {
-    public static final String apiKey = "2a198a8e06452586f142d584b819b1fd";
+    @Value("${weather.api.key}")
+    public String apiKey;
     public static final String apiUrl = "http://api.weatherstack.com/current?access_key=API_KEY&query=CITY";
     @Autowired
     private RestTemplate restTemplate;
