@@ -33,7 +33,7 @@ public class AdminController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    @GetMapping
+    @GetMapping("clear-cache")
     public boolean clearCache(){
         if(journalAppCache.init()){
             return true;
