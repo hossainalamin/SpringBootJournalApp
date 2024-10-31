@@ -1,5 +1,6 @@
 package com.hossainalamin.SpringBootProject.controller;
 
+import com.hossainalamin.SpringBootProject.cache.JournalAppCache;
 import com.hossainalamin.SpringBootProject.entity.Users;
 import com.hossainalamin.SpringBootProject.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import java.util.List;
 public class AdminController {
     @Autowired
     private UserService userService;
+    @Autowired
+    JournalAppCache journalAppCache;
     @GetMapping("all-user")
     public ResponseEntity<?> getAllUser() {
         List<Users> allUsers = userService.getAllUsers();
@@ -29,5 +32,12 @@ public class AdminController {
             return new ResponseEntity<>(users1, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping
+    public boolean clearCache(){
+        if(journalAppCache.init()){
+            return true;
+        }
+        return false;
     }
 }
