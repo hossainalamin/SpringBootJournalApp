@@ -4,6 +4,7 @@ import com.hossainalamin.SpringBootProject.entity.ConfigJournalApp;
 import com.hossainalamin.SpringBootProject.repository.ConfigJournalAppRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -16,6 +17,7 @@ public class JournalAppCache {
     ConfigJournalAppRepository configJournalAppRepository;
     public Map<String, String> APP_CACHE;
     @PostConstruct
+    @Scheduled(cron="0 0/10 * ? * *")
     public boolean init(){
         APP_CACHE = new HashMap<>();
         List<ConfigJournalApp> all = configJournalAppRepository.findAll();
