@@ -1,5 +1,6 @@
 package com.hossainalamin.SpringBootProject.entity;
 
+import com.hossainalamin.SpringBootProject.enums.Santiment;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -20,4 +21,5 @@ public class JournalEntry {
     private String title;
     private String content;
     private LocalDateTime date;
+    private Santiment santiment;
 }
