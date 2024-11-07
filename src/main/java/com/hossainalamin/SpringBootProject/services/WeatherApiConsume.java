@@ -4,6 +4,7 @@ import com.hossainalamin.SpringBootProject.api.response.WeatherResponse;
 import com.hossainalamin.SpringBootProject.cache.JournalAppCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class WeatherApiConsume {
     public String apiKey;
     @Autowired
     private RestTemplate restTemplate;
+    @Cacheable(value = "weather", key = "#city")
     public WeatherResponse getWeather(String city){
         String finalApiUrl = journalAppCache.APP_CACHE.get("weather_api").replace("<apiKey>", apiKey).replace("<city>", city);
         ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalApiUrl, HttpMethod.GET, null, WeatherResponse.class);//deserialize
